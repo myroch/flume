@@ -26,12 +26,30 @@ import org.apache.flume.Event;
 
 public class SimpleEvent implements Event {
 
+  private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+
   private Map<String, String> headers;
   private byte[] body;
 
   public SimpleEvent() {
-    headers = new HashMap<String, String>();
-    body = new byte[0];
+    this(null, null);
+  }
+
+  public SimpleEvent(byte[] body) {
+    this(body, null);
+  }
+
+  public SimpleEvent(byte[] body, Map<String, String> headers) {
+    if (body != null) {
+      this.body = body;
+    } else {
+      this.body = EMPTY_BYTE_ARRAY;
+    }
+    if (headers != null) {
+      this.headers = headers;
+    } else {
+      this.headers = new HashMap<String, String>();
+    }
   }
 
   @Override
@@ -52,7 +70,7 @@ public class SimpleEvent implements Event {
   @Override
   public void setBody(byte[] body) {
     if (body == null) {
-      body = new byte[0];
+      body = EMPTY_BYTE_ARRAY;
     }
     this.body = body;
   }

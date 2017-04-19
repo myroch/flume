@@ -35,32 +35,20 @@ public class EventBuilder {
    * @return
    */
   public static Event withBody(byte[] body, Map<String, String> headers) {
-    Event event = new SimpleEvent();
-
-    if (body == null) {
-      body = new byte[0];
-    }
-    event.setBody(body);
-
-    if (headers != null) {
-      event.setHeaders(new HashMap<String, String>(headers));
-    }
-
-    return event;
+    return new SimpleEvent(body, headers);
   }
 
   public static Event withBody(byte[] body) {
-    return withBody(body, null);
+    return new SimpleEvent(body);
   }
 
   public static Event withBody(String body, Charset charset,
       Map<String, String> headers) {
-
-    return withBody(body.getBytes(charset), headers);
+    return new SimpleEvent(body.getBytes(charset), headers);
   }
 
   public static Event withBody(String body, Charset charset) {
-    return withBody(body, charset, null);
+    return new SimpleEvent(body.getBytes(charset));
   }
 
 }
